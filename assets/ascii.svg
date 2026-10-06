@@ -19,71 +19,287 @@
 
     .cursor {
       fill: #58a6ff;
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      0%, 50% {
-        opacity: 1;
-      }
-
-      51%, 100% {
-        opacity: 0;
-      }
     }
   </style>
 
-  <text
-    x="40"
-    y="50"
-    class="ascii">
 
-    <tspan x="40" dy="0">
+  <!-- ====================================== -->
+  <!-- LINE 1 -->
+  <!-- ====================================== -->
+
+  <clipPath id="line1">
+    <rect x="40" y="30" width="0" height="24">
+      <animate
+        attributeName="width"
+        from="0"
+        to="820"
+        dur="0.65s"
+        begin="0s"
+        fill="freeze"/>
+    </rect>
+  </clipPath>
+
+  <g clip-path="url(#line1)">
+
+    <text
+      x="40"
+      y="50"
+      class="ascii">
+
       ██████╗ ██╗   ██╗██████╗ ██████╗ ██████╗  ██████╗
-    </tspan>
 
-    <tspan x="40" dy="24">
+    </text>
+
+  </g>
+
+
+  <!-- ====================================== -->
+  <!-- LINE 2 -->
+  <!-- ====================================== -->
+
+  <clipPath id="line2">
+    <rect x="40" y="54" width="0" height="24">
+
+      <animate
+        attributeName="width"
+        from="0"
+        to="820"
+        dur="0.65s"
+        begin="0.55s"
+        fill="freeze"/>
+
+    </rect>
+  </clipPath>
+
+  <g clip-path="url(#line2)">
+
+    <text
+      x="40"
+      y="74"
+      class="ascii">
+
       ██╔══██╗██║   ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗
-    </tspan>
 
-    <tspan x="40" dy="24">
+    </text>
+
+  </g>
+
+
+  <!-- ====================================== -->
+  <!-- LINE 3 -->
+  <!-- ====================================== -->
+
+  <clipPath id="line3">
+    <rect x="40" y="78" width="0" height="24">
+
+      <animate
+        attributeName="width"
+        from="0"
+        to="820"
+        dur="0.65s"
+        begin="1.1s"
+        fill="freeze"/>
+
+    </rect>
+  </clipPath>
+
+  <g clip-path="url(#line3)">
+
+    <text
+      x="40"
+      y="98"
+      class="ascii">
+
       ██████╔╝██║   ██║██║  ██║██║  ██║██████╔╝██║  ██║
-    </tspan>
 
-    <tspan x="40" dy="24">
+    </text>
+
+  </g>
+
+
+  <!-- ====================================== -->
+  <!-- LINE 4 -->
+  <!-- ====================================== -->
+
+  <clipPath id="line4">
+    <rect x="40" y="102" width="0" height="24">
+
+      <animate
+        attributeName="width"
+        from="0"
+        to="820"
+        dur="0.65s"
+        begin="1.65s"
+        fill="freeze"/>
+
+    </rect>
+  </clipPath>
+
+  <g clip-path="url(#line4)">
+
+    <text
+      x="40"
+      y="122"
+      class="ascii">
+
       ██╔══██╗██║   ██║██║  ██║██║  ██║██╔══██╗██║  ██║
-    </tspan>
 
-    <tspan x="40" dy="24">
+    </text>
+
+  </g>
+
+
+  <!-- ====================================== -->
+  <!-- LINE 5 -->
+  <!-- ====================================== -->
+
+  <clipPath id="line5">
+    <rect x="40" y="126" width="0" height="24">
+
+      <animate
+        attributeName="width"
+        from="0"
+        to="820"
+        dur="0.65s"
+        begin="2.2s"
+        fill="freeze"/>
+
+    </rect>
+  </clipPath>
+
+  <g clip-path="url(#line5)">
+
+    <text
+      x="40"
+      y="146"
+      class="ascii">
+
       ██║  ██║╚██████╔╝██████╔╝██████╔╝██║  ██║╚█████╔╝
-    </tspan>
 
-  </text>
+    </text>
 
-  <text
-    x="40"
-    y="220"
-    class="ascii">
+  </g>
 
-    <tspan x="40" dy="0">
+
+  <!-- ====================================== -->
+  <!-- TERMINAL TEXT -->
+  <!-- ====================================== -->
+
+  <clipPath id="terminal1">
+
+    <rect x="40" y="195" width="0" height="25">
+
+      <animate
+        attributeName="width"
+        from="0"
+        to="250"
+        dur="0.45s"
+        begin="3s"
+        fill="freeze"/>
+
+    </rect>
+
+  </clipPath>
+
+  <g clip-path="url(#terminal1)">
+
+    <text
+      x="40"
+      y="215"
+      class="ascii">
+
       &gt; whoami
-    </tspan>
 
-    <tspan x="40" dy="28">
+    </text>
+
+  </g>
+
+
+  <clipPath id="terminal2">
+
+    <rect x="40" y="225" width="0" height="25">
+
+      <animate
+        attributeName="width"
+        from="0"
+        to="250"
+        dur="0.45s"
+        begin="3.55s"
+        fill="freeze"/>
+
+    </rect>
+
+  </clipPath>
+
+  <g clip-path="url(#terminal2)">
+
+    <text
+      x="40"
+      y="245"
+      class="ascii">
+
       Ruddro
-    </tspan>
 
-    <tspan x="40" dy="28">
+    </text>
+
+  </g>
+
+
+  <clipPath id="terminal3">
+
+    <rect x="40" y="255" width="0" height="25">
+
+      <animate
+        attributeName="width"
+        from="0"
+        to="500"
+        dur="0.7s"
+        begin="4.1s"
+        fill="freeze"/>
+
+    </rect>
+
+  </clipPath>
+
+  <g clip-path="url(#terminal3)">
+
+    <text
+      x="40"
+      y="275"
+      class="ascii">
+
       &gt; building things on the internet...
-    </tspan>
 
-  </text>
+    </text>
+
+  </g>
+
+
+  <!-- ====================================== -->
+  <!-- TERMINAL CURSOR -->
+  <!-- ====================================== -->
 
   <rect
-    x="385"
-    y="274"
+    x="40"
+    y="292"
     width="10"
     height="22"
-    class="cursor"/>
+    class="cursor">
+
+    <animate
+      attributeName="x"
+      values="100;300;100"
+      dur="2s"
+      begin="4.7s"
+      repeatCount="indefinite"/>
+
+    <animate
+      attributeName="opacity"
+      values="1;0;1"
+      dur="0.8s"
+      begin="4.7s"
+      repeatCount="indefinite"/>
+
+  </rect>
 
 </svg>
