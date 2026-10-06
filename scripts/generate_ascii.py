@@ -1,5 +1,6 @@
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageEnhance
 from pathlib import Path
+import html
 
 
 # ==========================================
@@ -9,9 +10,9 @@ from pathlib import Path
 INPUT_IMAGE = Path("assets/profile.jpg")
 OUTPUT_FILE = Path("assets/new_ascii.svg")
 
-WIDTH = 80
+ASCII_WIDTH = 90
 
-# Characters ordered from dark → bright
+# Dark → bright
 CHARACTERS = "@%#*+=-:. "
 
 
@@ -19,30 +20,84 @@ CHARACTERS = "@%#*+=-:. "
 # LOAD IMAGE
 # ==========================================
 
-image = Image.open(INPUT_IMAGE)
+image = Image.open(INPUT_IMAGE).convert("RGB")
 
-# Convert to grayscale
+
+# ==========================================
+# CROP IMAGE
+# ==========================================
+
+# Make the image square around the center.
+width, height = image.size
+
+side = min(width, height)
+
+left = (width - side) // 2
+top = (height - side) // 2
+
+image = image.crop(
+    (
+        left,
+        top,
+        left + side,
+        top + side
+    )
+)
+
+
+# ==========================================
+# GRAYSCALE
+# ==========================================
+
 image = ImageOps.grayscale(image)
 
 
 # ==========================================
-# RESIZE IMAGE
+# CONTRAST
+# ==========================================
+
+contrast = ImageEnhance.Contrast(image)
+
+image = contrast.enhance(1.5)
+
+
+# ==========================================
+# BRIGHTNESS
+# ==========================================
+
+brightness = ImageEnhance.Brightness(image)
+
+image = brightness.enhance(1.05)
+
+
+# ==========================================
+# RESIZE
 # ==========================================
 
 aspect_ratio = image.height / image.width
 
-height = int(WIDTH * aspect_ratio * 0.5)
+ASCII_HEIGHT = int(
+    ASCII_WIDTH
+    * aspect_ratio
+    * 0.5
+)
 
-image = image.resize((WIDTH, height))
+image = image.resize(
+    (
+        ASCII_WIDTH,
+        ASCII_HEIGHT
+    )
+)
 
 
 # ==========================================
-# CONVERT PIXELS → ASCII
+# PIXELS → ASCII
 # ==========================================
 
 pixels = image.load()
 
 ascii_lines = []
+
 
 for y in range(image.height):
 
@@ -60,42 +115,54 @@ for y in range(image.height):
 
         line += CHARACTERS[index]
 
-    ascii_lines.append(line)
+    ascii_lines.append(line.rstrip())
 
 
 # ==========================================
-# GENERATE SVG
+# SVG CONFIG
 # ==========================================
 
-line_height = 14
+FONT_SIZE = 10
+LINE_HEIGHT = 12
 
-svg_height = len(ascii_lines) * line_height + 40
+SVG_WIDTH = 1000
+
+SVG_HEIGHT = (
+    len(ascii_lines)
+    * LINE_HEIGHT
+    + 60
+)
+
+
+# ==========================================
+# SVG HEADER
+# ==========================================
 
 svg = f"""<svg
 xmlns="http://www.w3.org/2000/svg"
-width="900"
-height="{svg_height}"
-viewBox="0 0 900 {svg_height}">
+width="{SVG_WIDTH}"
+height="{SVG_HEIGHT}"
+viewBox="0 0 {SVG_WIDTH} {SVG_HEIGHT}">
 
 <rect
-width="900"
-height="{svg_height}"
+width="100%"
+height="100%"
 fill="#0d1117"/>
 
 <style>
 
 .ascii {{
     font-family: monospace;
-    font-size: 12px;
+    font-size: {FONT_SIZE}px;
     fill: #58a6ff;
 }}
 
 </style>
 
 <text
+class="ascii"
 x="20"
-y="20"
-class="ascii">
+y="30">
 """
 
 
@@ -105,24 +172,22 @@ class="ascii">
 
 for i, line in enumerate(ascii_lines):
 
-    y = 20 + i * line_height
+    y = 30 + i * LINE_HEIGHT
 
-    # Escape XML-sensitive characters
-    line = (
-        line
-        .replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;")
-    )
+    safe_line = html.escape(line)
 
     svg += f"""
 <tspan
 x="20"
 y="{y}">
-{line}
+{safe_line}
 </tspan>
 """
 
+
+# ==========================================
+# CLOSE SVG
+# ==========================================
 
 svg += """
 
