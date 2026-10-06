@@ -8,12 +8,12 @@ import html
 # ==========================================
 
 INPUT_IMAGE = Path("assets/profile.jpg")
-OUTPUT_FILE = Path("assets/new_ascii.svg")
+OUTPUT_FILE = Path("assets/ascii.svg")
 
-ASCII_WIDTH = 90
+ASCII_WIDTH = 100
 
 # Dark → bright
-CHARACTERS = "@%#*+=-:. "
+CHARACTERS = "@#8&o:*. "
 
 
 # ==========================================
@@ -24,23 +24,26 @@ image = Image.open(INPUT_IMAGE).convert("RGB")
 
 
 # ==========================================
-# CROP IMAGE
+# RESIZE IMAGE
 # ==========================================
 
-# Make the image square around the center.
-width, height = image.size
+original_width, original_height = image.size
 
-side = min(width, height)
+aspect_ratio = original_height / original_width
 
-left = (width - side) // 2
-top = (height - side) // 2
+# Terminal characters are taller than they are wide.
+CHARACTER_ASPECT = 0.45
 
-image = image.crop(
+ascii_height = int(
+    ASCII_WIDTH
+    * aspect_ratio
+    * CHARACTER_ASPECT
+)
+
+image = image.resize(
     (
-        left,
-        top,
-        left + side,
-        top + side
+        ASCII_WIDTH,
+        ascii_height
     )
 )
 
@@ -53,45 +56,35 @@ image = ImageOps.grayscale(image)
 
 
 # ==========================================
+# AUTOCONTRAST
+# ==========================================
+
+image = ImageOps.autocontrast(
+    image,
+    cutoff=2
+)
+
+
+# ==========================================
 # CONTRAST
 # ==========================================
 
 contrast = ImageEnhance.Contrast(image)
 
-image = contrast.enhance(1.5)
+image = contrast.enhance(1.8)
 
 
 # ==========================================
-# BRIGHTNESS
+# SHARPEN
 # ==========================================
 
-brightness = ImageEnhance.Brightness(image)
-
-image = brightness.enhance(1.05)
-
-
-# ==========================================
-# RESIZE
-# ==========================================
-
-aspect_ratio = image.height / image.width
-
-ASCII_HEIGHT = int(
-    ASCII_WIDTH
-    * aspect_ratio
-    * 0.5
-)
-
-image = image.resize(
-    (
-        ASCII_WIDTH,
-        ASCII_HEIGHT
-    )
-)
+image = ImageEnhance.Sharpness(
+    image
+).enhance(1.4)
 
 
 # ==========================================
-# PIXELS → ASCII
+# ASCII CONVERSION
 # ==========================================
 
 pixels = image.load()
@@ -115,17 +108,19 @@ for y in range(image.height):
 
         line += CHARACTERS[index]
 
-    ascii_lines.append(line.rstrip())
+    ascii_lines.append(
+        line.rstrip()
+    )
 
 
 # ==========================================
-# SVG CONFIG
+# SVG CONFIGURATION
 # ==========================================
 
 FONT_SIZE = 10
 LINE_HEIGHT = 12
 
-SVG_WIDTH = 1000
+SVG_WIDTH = 1100
 
 SVG_HEIGHT = (
     len(ascii_lines)
@@ -167,7 +162,7 @@ y="30">
 
 
 # ==========================================
-# ADD ASCII LINES
+# ADD ASCII
 # ==========================================
 
 for i, line in enumerate(ascii_lines):
