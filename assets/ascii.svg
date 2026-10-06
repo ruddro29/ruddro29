@@ -297,7 +297,7 @@
       attributeName="opacity"
       values="1;0;1"
       dur="0.8s"
-      begin="4.5s"
+      begin="0.5s"
       repeatCount="indefinite"/>
 
   </rect>
