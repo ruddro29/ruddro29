@@ -1,3 +1,3 @@
-# Hello 👋
+# Hey 👋
 
-<img src="./assets/test.svg">
+<img src="./assets/ascii.svg" />
