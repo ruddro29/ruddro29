@@ -4,33 +4,17 @@ import html
 
 
 # ============================================================
-# CONFIGURATION
+# CONFIG
 # ============================================================
 
 INPUT_IMAGE = Path("assets/profile.jpg")
 OUTPUT_FILE = Path("assets/new_ascii.svg")
 
-# Higher = more detailed portrait
-ASCII_WIDTH = 110
+# More characters = more facial detail
+ASCII_WIDTH = 140
 
-# Characters from DARK → BRIGHT
-CHARACTERS = "@%#*+=-:. "
-
-# GitHub blue
-COLOR = "#58a6ff"
-
-# Portrait contrast
-CONTRAST = 2.0
-
-# Brightness adjustment
-BRIGHTNESS = 1.05
-
-# How aggressively we remove the background
-BACKGROUND_THRESHOLD = 205
-
-# Animation
-LINE_DURATION = 0.045
-LINE_DELAY = 0.018
+# Dark -> bright
+CHARACTERS = "@#8&o:*. "
 
 
 # ============================================================
@@ -41,11 +25,12 @@ image = Image.open(INPUT_IMAGE).convert("RGB")
 
 
 # ============================================================
-# CROP
+# CROP IMAGE
 # ============================================================
 
 width, height = image.size
 
+# Keep a square-ish portrait area.
 side = min(width, height)
 
 left = (width - side) // 2
@@ -69,40 +54,12 @@ image = ImageOps.grayscale(image)
 
 
 # ============================================================
-# AUTO CONTRAST
+# IMPROVE CONTRAST
 # ============================================================
 
-image = ImageOps.autocontrast(
-    image,
-    cutoff=2
-)
+image = ImageEnhance.Contrast(image).enhance(1.8)
 
-
-# ============================================================
-# CONTRAST
-# ============================================================
-
-image = ImageEnhance.Contrast(
-    image
-).enhance(CONTRAST)
-
-
-# ============================================================
-# BRIGHTNESS
-# ============================================================
-
-image = ImageEnhance.Brightness(
-    image
-).enhance(BRIGHTNESS)
-
-
-# ============================================================
-# SLIGHT SHARPEN
-# ============================================================
-
-image = image.filter(
-    ImageFilter.SHARPEN
-)
+image = ImageEnhance.Sharpness(image).enhance(2.0)
 
 
 # ============================================================
@@ -112,45 +69,37 @@ image = image.filter(
 aspect_ratio = image.height / image.width
 
 ASCII_HEIGHT = int(
-    ASCII_WIDTH
-    * aspect_ratio
-    * 0.50
+    ASCII_WIDTH *
+    aspect_ratio *
+    0.50
 )
 
 image = image.resize(
-    (
-        ASCII_WIDTH,
-        ASCII_HEIGHT
-    ),
+    (ASCII_WIDTH, ASCII_HEIGHT),
     Image.Resampling.LANCZOS
 )
 
 
 # ============================================================
-# BACKGROUND SUPPRESSION
+# SLIGHT SHARPENING
+# ============================================================
+
+image = image.filter(
+    ImageFilter.UnsharpMask(
+        radius=1,
+        percent=150,
+        threshold=3
+    )
+)
+
+
+# ============================================================
+# CONVERT PIXELS TO ASCII
 # ============================================================
 
 pixels = image.load()
 
-for y in range(image.height):
-
-    for x in range(image.width):
-
-        value = pixels[x, y]
-
-        # Very bright areas become empty space.
-        if value >= BACKGROUND_THRESHOLD:
-
-            pixels[x, y] = 255
-
-
-# ============================================================
-# PIXELS → ASCII
-# ============================================================
-
-pixels = image.load()
-
-ascii_lines = []
+lines = []
 
 for y in range(image.height):
 
@@ -158,62 +107,48 @@ for y in range(image.height):
 
     for x in range(image.width):
 
-        value = pixels[x, y]
+        brightness = pixels[x, y]
+
+        # Invert brightness:
+        # dark pixels → dense characters
+        # bright pixels → spaces
 
         index = int(
-            value
-            / 255
-            * (len(CHARACTERS) - 1)
-        )
-
-        index = max(
-            0,
-            min(
-                index,
-                len(CHARACTERS) - 1
-            )
+            brightness / 255 *
+            (len(CHARACTERS) - 1)
         )
 
         line += CHARACTERS[index]
 
-    # Remove useless trailing whitespace
-    line = line.rstrip()
-
-    ascii_lines.append(line)
-
-
-# ============================================================
-# REMOVE EMPTY LINES
-# ============================================================
-
-ascii_lines = [
-    line
-    for line in ascii_lines
-    if line.strip()
-]
+    lines.append(line.rstrip())
 
 
 # ============================================================
 # SVG SETTINGS
 # ============================================================
 
-FONT_SIZE = 9
-LINE_HEIGHT = 10
+CHAR_WIDTH = 5.2
+CHAR_HEIGHT = 8
 
-SVG_WIDTH = 1100
+PADDING_X = 20
+PADDING_Y = 30
 
-SVG_HEIGHT = (
-    len(ascii_lines)
-    * LINE_HEIGHT
-    + 80
+SVG_WIDTH = int(
+    PADDING_X * 2 +
+    ASCII_WIDTH * CHAR_WIDTH
+)
+
+SVG_HEIGHT = int(
+    PADDING_Y * 2 +
+    len(lines) * CHAR_HEIGHT
 )
 
 
 # ============================================================
-# SVG HEADER
+# BUILD SVG
 # ============================================================
 
-svg = f"""<svg
+svg = f'''<svg
 xmlns="http://www.w3.org/2000/svg"
 width="{SVG_WIDTH}"
 height="{SVG_HEIGHT}"
@@ -227,126 +162,69 @@ fill="#0d1117"/>
 <style>
 
 .ascii {{
-    font-family: monospace;
-    font-size: {FONT_SIZE}px;
-    font-weight: 400;
-    fill: {COLOR};
-}}
+    font-family:
+        "Courier New",
+        "Liberation Mono",
+        monospace;
 
-.cursor {{
-    fill: {COLOR};
+    font-size: 7px;
+
+    fill: #58a6ff;
+
+    letter-spacing: 0px;
 }}
 
 </style>
-"""
+
+<text
+class="ascii"
+x="{PADDING_X}"
+y="{PADDING_Y}">
+'''
 
 
 # ============================================================
-# GENERATE ANIMATED ASCII
+# ADD ANIMATED ROWS
 # ============================================================
 
-for i, line in enumerate(ascii_lines):
+for i, line in enumerate(lines):
 
-    y = 30 + i * LINE_HEIGHT
+    y = i * CHAR_HEIGHT
 
     safe_line = html.escape(line)
 
-    start_time = (
-        i * LINE_DELAY
-    )
+    delay = i * 0.025
 
-    line_width = max(
-        len(line)
-        * FONT_SIZE
-        * 0.60,
-        10
-    )
+    duration = 0.45
 
-    svg += f"""
+    svg += f'''
+<tspan
+x="{PADDING_X}"
+dy="{0 if i == 0 else CHAR_HEIGHT}">
 
-<clipPath id="clip{i}">
+    <tspan>
 
-    <rect
-        x="20"
-        y="{y - FONT_SIZE}"
-        width="0"
-        height="{LINE_HEIGHT}">
+        {safe_line}
 
-        <animate
-            attributeName="width"
-            from="0"
-            to="{line_width}"
-            dur="{LINE_DURATION}s"
-            begin="{start_time}s"
-            fill="freeze"/>
+    </tspan>
 
-    </rect>
+</tspan>
+'''
 
-</clipPath>
 
-<text
-x="20"
-y="{y}"
-class="ascii"
-clip-path="url(#clip{i})">
+# ============================================================
+# CLOSE SVG
+# ============================================================
 
-{safe_line}
-
+svg += '''
 </text>
-"""
-
-
-# ============================================================
-# CURSOR
-# ============================================================
-
-total_animation_time = (
-    len(ascii_lines) * LINE_DELAY
-    + LINE_DURATION
-)
-
-
-svg += """
-
-<rect
-x="20"
-y="20"
-width="6"
-height="10"
-class="cursor">
-
-<animate
-attributeName="y"
-values="
-"""
-
-
-for i in range(len(ascii_lines)):
-
-    y = 30 + i * LINE_HEIGHT
-
-    svg += f"{y - FONT_SIZE};"
-
-
-svg += f"""
-"
-dur="{total_animation_time}s"
-fill="freeze"/>
-
-<animate
-attributeName="opacity"
-values="1;0;1"
-dur="0.6s"
-repeatCount="indefinite"/>
-
-</rect>
 
 </svg>
-"""
+'''
 
 
 # ============================================================
-# WRITE SVG
+# WRITE FILE
 # ============================================================
 
 OUTPUT_FILE.write_text(
