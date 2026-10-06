@@ -42,6 +42,27 @@
       }
     }
 
+
+    .typing {
+  animation: typing 3s steps(6) infinite;
+}
+
+@keyframes typing {
+
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  50% {
+    clip-path: inset(0 0 0 0);
+  }
+
+  100% {
+    clip-path: inset(0 100% 0 0);
+  }
+
+}
+    
   </style>
 
 
@@ -52,23 +73,23 @@
     y="50"
     class="ascii">
 
-    <tspan x="40" dy="0">
+  <tspan x="40" dy="0">
       ██████╗ ██╗   ██╗██████╗ ██████╗ ██████╗  ██████╗
     </tspan>
 
-    <tspan x="40" dy="24">
+  <tspan x="40" dy="24">
       ██╔══██╗██║   ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗
     </tspan>
 
-    <tspan x="40" dy="24">
+  <tspan x="40" dy="24">
       ██████╔╝██║   ██║██║  ██║██║  ██║██████╔╝██║  ██║
     </tspan>
 
-    <tspan x="40" dy="24">
+  <tspan x="40" dy="24">
       ██╔══██╗██║   ██║██║  ██║██║  ██║██╔══██╗██║  ██║
     </tspan>
 
-    <tspan x="40" dy="24">
+  <tspan x="40" dy="24">
       ██║  ██║╚██████╔╝██████╔╝██████╔╝██║  ██║╚█████╔╝
     </tspan>
 
@@ -82,30 +103,31 @@
     y="220"
     class="terminal">
 
-    <tspan
+  <tspan
       x="40"
       dy="0"
       class="green">
 
-      &gt; whoami
+  &gt; whoami
 
-    </tspan>
+  </tspan>
 
-    <tspan
+<tspan
+  x="40"
+  dy="32"
+  class="typing">
+
+  Ruddro
+
+</tspan>
+
+  <tspan
       x="40"
       dy="32">
 
-      Ruddro
+  &gt; building things on the internet...
 
-    </tspan>
-
-    <tspan
-      x="40"
-      dy="32">
-
-      &gt; building things on the internet...
-
-    </tspan>
+  </tspan>
 
   </text>
 
