@@ -7,7 +7,7 @@ from pathlib import Path
 # ==========================================
 
 INPUT_IMAGE = Path("assets/profile.jpg")
-OUTPUT_FILE = Path("assets/ascii.svg")
+OUTPUT_FILE = Path("assets/new_ascii.svg")
 
 WIDTH = 80
 
