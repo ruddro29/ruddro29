@@ -1,0 +1,89 @@
+<svg
+  width="900"
+  height="400"
+  viewBox="0 0 900 400"
+  xmlns="http://www.w3.org/2000/svg">
+
+  <rect
+    width="900"
+    height="400"
+    fill="#0d1117"/>
+
+  <style>
+    .ascii {
+      font-family: monospace;
+      font-size: 16px;
+      fill: #58a6ff;
+      white-space: pre;
+    }
+
+    .cursor {
+      fill: #58a6ff;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% {
+        opacity: 1;
+      }
+
+      51%, 100% {
+        opacity: 0;
+      }
+    }
+  </style>
+
+  <text
+    x="40"
+    y="50"
+    class="ascii">
+
+    <tspan x="40" dy="0">
+      ██████╗ ██╗   ██╗██████╗ ██████╗ ██████╗  ██████╗
+    </tspan>
+
+    <tspan x="40" dy="24">
+      ██╔══██╗██║   ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+    </tspan>
+
+    <tspan x="40" dy="24">
+      ██████╔╝██║   ██║██║  ██║██║  ██║██████╔╝██║  ██║
+    </tspan>
+
+    <tspan x="40" dy="24">
+      ██╔══██╗██║   ██║██║  ██║██║  ██║██╔══██╗██║  ██║
+    </tspan>
+
+    <tspan x="40" dy="24">
+      ██║  ██║╚██████╔╝██████╔╝██████╔╝██║  ██║╚█████╔╝
+    </tspan>
+
+  </text>
+
+  <text
+    x="40"
+    y="220"
+    class="ascii">
+
+    <tspan x="40" dy="0">
+      &gt; whoami
+    </tspan>
+
+    <tspan x="40" dy="28">
+      Ruddro
+    </tspan>
+
+    <tspan x="40" dy="28">
+      &gt; building things on the internet...
+    </tspan>
+
+  </text>
+
+  <rect
+    x="385"
+    y="274"
+    width="10"
+    height="22"
+    class="cursor"/>
+
+</svg>
