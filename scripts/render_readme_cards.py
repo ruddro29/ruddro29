@@ -367,7 +367,7 @@ def activity(data):
 REPO_W, REPO_H = 880 / 3 - 8, 176
 REPOS = [
     ("Nightcode", "Autonomous AI coding agent and developer workflow toolkit.", "Python", TECH),
-    ("Drawsync", "Real-time collaborative canvas with an AI question and diagram engine.", "TypeScript", STUDIO),
+    ("AI Agent", "Autonomous task-execution agent built from scratch with multi-step reasoning and tool-use orchestration.", "LangGraph", STUDIO),
     ("Chess-Engine", "Custom chess engine in Python with FEN parsing, move search, and board UI.", "Python", LEARN),
 ]
 
@@ -485,7 +485,7 @@ if __name__ == "__main__":
     stars = repo_stars()
     for i, (name, desc, lang, color) in enumerate(REPOS):
         repo_card(i, name, desc, lang, color, stars.get(name, 0))
-    section_title("What I'm", "coding", "dark")
-    section_title("What I'm", "coding", "light")
+    section_title("What I'm", "building", "dark")
+    section_title("What I'm", "building", "light")
     heatmap(data)
 
