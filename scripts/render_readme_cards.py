@@ -35,7 +35,7 @@ HERO_BADGE = "BUILDING IN PUBLIC"
 HERO_FIRST = "Ruddro"
 HERO_SECOND = "Builds."
 HERO_BIO = [
-    "Turning ideas into working software\n"
+    "Turning ideas into working software",
     "and sharing what I learn along the way",
 ]
 HERO_LINK = "github.com/ruddro29"
