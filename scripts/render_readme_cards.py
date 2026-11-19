@@ -476,12 +476,12 @@ if __name__ == "__main__":
     with open(DATA, encoding="utf-8") as f:
         data = json.load(f)
     hero()
-    tile("build", "BUILD", TECH, "#ffffff", "3", "startups",
-         "Dock today. Before that Raycaster and AccioJob (YC), and Turgon AI.", 3.1, 0)
-    tile("brand", "BRAND", STUDIO, "#ffffff", REEL_VIEWS, "views",
-         "Six months of Reels, with Higgsfield, Replit, Huggle AI and Tripo AI.", 3.35, 1)
-    tile("learn", "LEARN", LEARN, INK, BLOG_READERS, "readers",
-         "Free resources for students and early-career devs, read this year.", 3.6, 2)
+    tile("build", "BUILD", TECH, "#ffffff", "5+", "tools",
+         "From autonomous agents to custom chess engines and web experiments.", 3.1, 0)
+    tile("brand", "DEV", STUDIO, "#ffffff", "100%", "open source",
+         "Building everything in public. Architecture, failures, and breakthroughs.", 3.35, 1)
+    tile("learn", "STACK", LEARN, INK, "2026", "focus",
+         "Exploring agentic workflows, LangGraph, LLM orchestration, and modern web.", 3.6, 2)
     activity(data)
     stars = repo_stars()
     for i, (name, desc, lang, color) in enumerate(REPOS):
