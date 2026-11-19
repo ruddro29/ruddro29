@@ -276,6 +276,8 @@ def tile(name, label, color, on, num, word, blurb, delay, pos):
         f'font-size="14" fill="{on}" opacity=".92">{escape(line)}</text>'
         for i, line in enumerate(lines)
     )
+    full_title_len = len(f"{num} {word}")
+    fsize = 34 if full_title_len > 13 else (38 if full_title_len > 10 else 44)
     body = f"""
 <defs>
   <clipPath id="card"><rect width="{TILE_W}" height="{TILE_H}" rx="14"/></clipPath>
@@ -292,7 +294,7 @@ def tile(name, label, color, on, num, word, blurb, delay, pos):
   <text class="sl" {d(delay + 0.35)} x="24" y="38" font-family="{MONO}" font-size="12" letter-spacing="1.2" fill="{on}">{label}</text>
   <g class="ai" {d(delay + 0.5)}><text class="n" style="animation-delay:{delay + 1.3:.2f}s" x="250" y="38" font-family="{MONO}" font-size="14" fill="{on}">&#8594;</text></g>
   <g clip-path="url(#slot)"><g class="ro" {d(delay + 0.45)}>
-    {count_up(num, word, 22, 112, f'font-family="{SERIF}" font-size="44" fill="{on}"', delay + 0.45)}
+    {count_up(num, word, 22, 112, f'font-family="{SERIF}" font-size="{fsize}" fill="{on}"', delay + 0.45)}
   </g></g>
   {blurb_svg}
 </g>
