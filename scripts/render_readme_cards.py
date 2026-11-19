@@ -368,7 +368,7 @@ def activity(data):
 REPO_W, REPO_H = 880 / 3 - 8, 176
 REPOS = [
     ("Nightcode", "Autonomous AI coding agent and developer workflow toolkit.", "Python", TECH),
-    ("AI Agent", "Autonomous task-execution agent built from scratch with multi-step reasoning and tool-use orchestration.", "LangGraph", STUDIO),
+    ("AI Agent", "Autonomous task agent with multi-step reasoning and tool orchestration.", "LangGraph", STUDIO),
     ("Chess-Engine", "Custom chess engine in Python with FEN parsing, move search, and board UI.", "Python", LEARN),
 ]
 
