@@ -31,12 +31,11 @@ PORTRAIT = os.path.join(ROOT, "ruddro-ascii.svg")
 
 # ---- profile & hand-set numbers ---------------------------------------------
 USERNAME = os.environ.get("GH_PROFILE_USER", "ruddro29")
-HERO_BADGE = "FULLSTACK & AI ENGINEER"
+HERO_BADGE = "BUILDING IN PUBLIC"
 HERO_FIRST = "Ruddro"
 HERO_SECOND = "Builds."
 HERO_BIO = [
-    "I build AI agents, full-stack products, and interactive tools,",
-    "and share what I learn along the way.",
+    "Turning ideas into working software and sharing what I learn along the way",
 ]
 HERO_LINK = "github.com/ruddro29"
 
