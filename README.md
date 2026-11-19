@@ -7,7 +7,7 @@
 <img src="./cards/heatmap.svg" width="100%" alt="Ruddro's contribution graph, in blue, refreshed daily" /><br>
 <img src="./cards/activity.svg" width="100%" alt="Contributions in the last 12 months, by month, with streak and busiest day" /><br>
 <a href="https://github.com/ruddro29?tab=repositories"><img src="./cards/build.svg" width="32.5%" alt="BUILD: 3 startups" /></a><a href="https://x.com/ruddro29"><img src="./cards/brand.svg" width="32.5%" alt="BRAND: 12.7M views" /></a><a href="https://github.com/ruddro29"><img src="./cards/learn.svg" width="32.5%" alt="LEARN: 27.5K readers" /></a><br>
-<picture><source media="(prefers-color-scheme: dark)" srcset="./cards/title-coding-dark.svg" /><img src="./cards/title-coding-light.svg" width="100%" alt="What I'm coding" /></picture><br>
+<picture><source media="(prefers-color-scheme: dark)" srcset="./cards/title-coding-dark.svg" /><img src="./cards/title-coding-light.svg" width="100%" alt="What I'm building" /></picture><br>
 <a href="https://github.com/ruddro29"><img src="./cards/repo-Nightcode.svg" width="32.5%" alt="Nightcode" /></a><a href="https://github.com/ruddro29"><img src="./cards/repo-Drawsync.svg" width="32.5%" alt="Drawsync" /></a><a href="https://github.com/ruddro29"><img src="./cards/repo-Chess-Engine.svg" width="32.5%" alt="Chess-Engine" /></a>
 </div>
 
